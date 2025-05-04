@@ -9,15 +9,10 @@ load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
 default_ef = embedding_functions.DefaultEmbeddingFunction()
-openai_ef = embedding_functions.OpenAIEmbeddingFunction(
-    api_key=openai_api_key, model_name="text-embedding-3-small"
-)
+openai_ef = embedding_functions.OpenAIEmbeddingFunction(api_key=openai_api_key, model_name="text-embedding-3-small")
 croma_client = chromadb.PersistentClient(path="./db/chroma_persist")
 
-collection = croma_client.get_or_create_collection(
-    "my_story",
-    embedding_function=openai_ef,
-)
+collection = croma_client.get_or_create_collection("my_story", embedding_function=openai_ef, )
 
 # Define text documents
 documents = [

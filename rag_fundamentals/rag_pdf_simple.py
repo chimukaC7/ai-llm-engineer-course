@@ -11,8 +11,8 @@ import uuid
 load_dotenv()
 
 # Constants
-CHUNK_SIZE = 1000
-CHUNK_OVERLAP = 200
+CHUNK_SIZE = 1000 # Size of each chunk
+CHUNK_OVERLAP = 200 # Overlap between chunks
 
 
 class SimpleModelSelector:
@@ -23,6 +23,12 @@ class SimpleModelSelector:
         self.llm_models = {"openai": "GPT-4", "ollama": "Llama3"}
 
         # Available embedding models with their dimensions
+        # Note: Dimensions are based on the model used
+        # and may vary based on the actual implementation
+        # For example, OpenAI's text-embedding-3-small has 1536 dimensions
+        # ChromaDB default embedding function has 384 dimensions
+        # Nomic's embed-text model has 768 dimensions
+
         self.embedding_models = {
             "openai": {
                 "name": "OpenAI Embeddings",

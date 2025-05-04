@@ -8,17 +8,14 @@ from chromadb.utils import embedding_functions
 load_dotenv()
 openai_key = os.getenv("OPENAI_API_KEY")
 
-openai_ef = embedding_functions.OpenAIEmbeddingFunction(
-    api_key=openai_key, model_name="text-embedding-3-small"
-)
+openai_ef = embedding_functions.OpenAIEmbeddingFunction(api_key=openai_key, model_name="text-embedding-3-small")
 
 
 # Initialize the Chroma client with persistence
 chroma_client = chromadb.PersistentClient(path="./db/chroma_persistent_storage")
 collection_name = "document_qa_collection"
-collection = chroma_client.get_or_create_collection(
-    name=collection_name, embedding_function=openai_ef
-)
+
+collection = chroma_client.get_or_create_collection(name=collection_name, embedding_function=openai_ef)
 
 client = OpenAI(api_key=openai_key)
 
@@ -40,6 +37,8 @@ def load_documents_from_directory(directory_path):
 
 
 # Function to split text into chunks
+# chunk_size: The size of each chunk
+#
 def split_text(text, chunk_size=1000, chunk_overlap=20):
     chunks = []
     start = 0
@@ -53,6 +52,9 @@ def split_text(text, chunk_size=1000, chunk_overlap=20):
 # Load documents from the directory
 directory_path = "./data/new_articles"
 documents = load_documents_from_directory(directory_path)
+print(f"==== Loaded {len(documents)} documents ====")
+print(documents)
+
 
 # Split the documents into chunks
 chunked_documents = []

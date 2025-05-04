@@ -5,9 +5,7 @@ from chromadb.utils import embedding_functions
 default_ef = embedding_functions.DefaultEmbeddingFunction()
 croma_client = chromadb.PersistentClient(path="./db/chroma_persist")
 
-collection = croma_client.get_or_create_collection(
-    "my_story", embedding_function=default_ef
-)
+collection = croma_client.get_or_create_collection("my_story", embedding_function=default_ef)
 # Define text documents
 documents = [
     {"id": "doc1", "text": "Hello, world!"},
@@ -25,10 +23,7 @@ for doc in documents:
 # define a query text
 query_text = "find document related to technology company"
 
-results = collection.query(
-    query_texts=[query_text],
-    n_results=2,
-)
+results = collection.query(query_texts=[query_text],n_results=2,)
 
 for idx, document in enumerate(results["documents"][0]):
     doc_id = results["ids"][0][idx]
